@@ -1,4 +1,3 @@
-
 const BaseConnector = require('discipl-core-baseconnector')
 const uportConnect = require('uport-connect')
 
@@ -30,23 +29,38 @@ module.exports = class uPortConnector extends BaseConnector {
   }
 
   async claim(ssid, data) {
-    uport.attestCredentials({
-      sub: data.sub,
-      claim: data.data,
+    let retval = await this.uport.attestCredentials({
+      'sub': ssid.pubkey,
+      'claim': data
     })
+    if(retval == 'ok')
+      return Object.keys(data)[0]
+    throw Error('Could not attest data')
   }
 
   async get(reference, ssid = null) {
-    if(reference) {
-      return this.uport.requestCredentials({verified:reference})
+    let predicates = [reference]
+    let credentials = null
+    try {
+      if(reference != null) {
+        //console.log('retrieving:'+JSON.stringify({verified:predicates}))
+        credentials = await this.uport.requestCredentials({verified:predicates})
+      } else {
+        //console.log('retrieving profile')
+        credentials = await this.uport.requestCredentials({notifications:true})
+      }
+    } catch(err) {
+      throw Error(err)
     }
-    return this.uport.requestCredentials()
+    //console.log("Credentials:"+Object.keys(credentials)+' verified:'+credentials.verified)
+    let data = credentials.verified
+    return {'data':data, 'previous':null}
   }
 
   async verify(ssid, data) {
     let credentialType= Object.keys(data)[0]
     let result = await this.get(credentialType)
-    if(result == data) {
+    if(result.data == data) {
       return credentialType
     }
     return null

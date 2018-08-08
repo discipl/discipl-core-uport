@@ -2,7 +2,7 @@
 
 Discipl Core Connector implementation for utilizing uPort to issue and verify ownership of signed claims in a given uport wallet (linked to an uport user)
 
-We will use uport-js to implement the base connector api with the following specifics:
+We will use uport-connect to implement the base connector api with the following specifics:
 
 - getName : returns 'uport'
 - newSsid : returns an empty ssid in which an issuer needs to set it's public and private key themselves that have been created using the uport App Manager

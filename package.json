@@ -8,17 +8,19 @@
     "uport-connect": "0.7.5"
   },
   "devDependencies": {
-    "qrcode-terminal": "0.12.0"
+    "assert": "1.4.1",
+    "qrcode-terminal": "0.12.0",
+    "vows": "0.8.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vows test/discipl-core-uport-test.js --spec"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/discipl/discipl-core-uport.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Bas Kaptijn",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/discipl/discipl-core-uport/issues"
   },
