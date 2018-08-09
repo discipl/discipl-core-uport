@@ -26,11 +26,11 @@ let suite = vows.describe('discipl-core-uport').addBatch({
     topic : function () {
       vows = this
       try {
-        connector.configure("WIGO4IT IDENTITY", {
+        connector.configure("discipl-core-uport-test", {
         uriHandler,
-        clientId: '2op3XWF4dpPYuyvFw5UpoQviVRs8wihzHZj',
+        clientId: '2ot95zh4Smq3D74kSVPFS6jBPaGYTbiGmVA',
         network: 'rinkeby',
-        signer: uportConnect.SimpleSigner("a0e388225b15ea1fbb0a86547971abc7556049b6d22dc073b7744403e7058e39")
+        signer: uportConnect.SimpleSigner("4dfde271e17947f1b48d9961807af334d95c2dc4e36d34e30e37f0ea8453d823")
         })
       } catch(err) {
         vows.callback(err, null)
@@ -57,10 +57,26 @@ let suite = vows.describe('discipl-core-uport').addBatch({
         assert.equal(ssid.privkey, null)
     }
   }}).addBatch({
+  'get() without arguments' : {
+    topic : function () {
+      vows = this
+      connector.get().then(function (res) {
+        tmpSsid.pubkey = res.data.address
+        console.log('uport wallet user: '+res.data.address)
+        vows.callback(null, res)
+      }).catch(function (err) {
+        vows.callback(err, null)
+      })
+    },
+    ' returns a result object with the full profile' : function (err, res) {
+        assert.equal(err, null)
+        assert.equal(res.data.address, res.data.did)
+        assert.equal(res.previous, null)
+    }
+  }}).addBatch({
   'claim()' : {
     topic : function () {
       vows = this
-      tmpSsid.pubkey = '0xe042f4b2e271c7c214f8734f4313c7bebb8c519f'
       connector.claim(tmpSsid, {'need':'beer'}).then(function (res) {
         tmpReference = res
         vows.callback(null, res)

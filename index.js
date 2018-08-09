@@ -39,28 +39,26 @@ module.exports = class uPortConnector extends BaseConnector {
   }
 
   async get(reference, ssid = null) {
-    let predicates = [reference]
+    let requested = [reference]
     let credentials = null
+    let data = null
     try {
       if(reference != null) {
-        //console.log('retrieving:'+JSON.stringify({verified:predicates}))
-        credentials = await this.uport.requestCredentials({verified:predicates})
+        credentials = await this.uport.requestCredentials({'verified':['need']})
+        data = credentials.verified[0].claim
       } else {
-        //console.log('retrieving profile')
-        credentials = await this.uport.requestCredentials({notifications:true})
+        data = await this.uport.requestCredentials({requested:['did'],notifications:true})
       }
     } catch(err) {
       throw Error(err)
     }
-    //console.log("Credentials:"+Object.keys(credentials)+' verified:'+credentials.verified)
-    let data = credentials.verified
     return {'data':data, 'previous':null}
   }
 
   async verify(ssid, data) {
     let credentialType= Object.keys(data)[0]
     let result = await this.get(credentialType)
-    if(result.data == data) {
+    if(JSON.stringify(result.data) == JSON.stringify(data)) {
       return credentialType
     }
     return null
