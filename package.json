@@ -4,8 +4,8 @@
   "description": "Discipl Core Connector implementation for utilizing uPort to issue and verify ownership of signed claims in a given uport wallet (linked to an uport user)",
   "main": "index.js",
   "dependencies": {
-    "discipl-core-baseconnector": "1.0.0",
-    "uport-connect": "0.7.5"
+    "discipl-core-baseconnector": "git+https://github.com/discipl/discipl-core-baseconnector.git",
+    "uport-connect": "^0.7.5"
   },
   "devDependencies": {
     "assert": "1.4.1",
@@ -24,9 +24,5 @@
   "bugs": {
     "url": "https://github.com/discipl/discipl-core-uport/issues"
   },
-  "homepage": "https://github.com/discipl/discipl-core-uport#readme",
-  "dependencies": {
-    "discipl-core-baseconnector": "git+https://github.com/discipl/discipl-core-baseconnector.git"
-  }
-
+  "homepage": "https://github.com/discipl/discipl-core-uport#readme"
 }
