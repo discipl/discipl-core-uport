@@ -24,5 +24,9 @@
   "bugs": {
     "url": "https://github.com/discipl/discipl-core-uport/issues"
   },
-  "homepage": "https://github.com/discipl/discipl-core-uport#readme"
+  "homepage": "https://github.com/discipl/discipl-core-uport#readme",
+  "dependencies": {
+    "discipl-core-baseconnector": "git+https://github.com/discipl/discipl-core-baseconnector.git"
+  }
+
 }
